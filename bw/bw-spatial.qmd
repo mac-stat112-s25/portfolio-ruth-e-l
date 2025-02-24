@@ -3,3 +3,29 @@ title: "Spatial Viz"
 ---
 
 Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+#load map
+library(socviz)
+data(county_map) 
+
+
+#import data
+elections_by_counties <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+elections_by_counties <- elections_by_counties |> 
+  mutate(county_fips = as.character(county_fips)) |> 
+  mutate(county_fips = 
+           ifelse(nchar(county_fips) == 4, paste0("0", county_fips), county_fips))
+```
+
+```{r}
+#|echo: false
+#|fig-cap: "Map of the median rent in each US county. Source: https://mac-stat.github.io/data/election_2020_county.csv"
+#|fig-alt: "Map of the median rent in each US county. Higher median rent is clustered around the West and East coasts, with the highest rent, around 1600, on the Northeast coast and the California coast. Source: https://mac-stat.github.io/data/election_2020_county.csv"
+
+ggplot(elections_by_counties, aes(map_id = county_fips, fill = median_rent)) +
+  geom_map(map = county_map) +
+  expand_limits(x = county_map$long, y = county_map$lat) +
+  theme_map() +
+  scale_fill_gradientn(name = "Median Rent", colors = c("white", "darkgreen", "black"), values = scales::rescale(seq(0, 100, by = 5))) 
+```

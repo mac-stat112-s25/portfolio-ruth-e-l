@@ -3,3 +3,16 @@ title: "Quadvariate Viz"
 ---
 
 Use this file to generate a professional looking **quadvariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+# import data
+education <- read.csv("https://mac-stat.github.io/data/sat.csv")
+```
+
+```{r}
+#|echo: false
+#|fig-cap: "Scatterplot of US public elementary and secondary schools' average SAT score in 1994-95, based on their expenses per student, salary of teachers, and the percentage of students who took the SAT. Source: https://mac-stat.github.io/data/sat.csv"
+#|fig-alt: "Scatterplot of US public elementary and secondary schools' average SAT score in 1994-95, based on their expenses per student, salary of teachers, and the percentage of students who took the SAT. SAT scores appear to decrease with higher expenses and salaries, but also decrease with larger sample sizes. Source: https://mac-stat.github.io/data/sat.csv"
+
+ggplot(education, aes(x = expend, y = sat, size = fracCat, color = salary)) + geom_point() + theme_minimal() + labs(x = "School's Expenses Per Student (in $1000s)", y = "SAT Score (School Average)", size = "Percentage of Students Who Took SAT") 
+```

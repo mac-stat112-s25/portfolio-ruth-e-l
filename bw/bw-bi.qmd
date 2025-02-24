@@ -3,3 +3,18 @@ title: "Bivariate Viz"
 ---
 
 Use this file to generate a professional looking **bivariate** visualization.  The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+# import data
+elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+```
+
+```{r}
+#| echo: false
+#| fig-cap: "Faceted density plot of Republican percentage of the 2020 presidential election vote, organized by historical political leanings of the state. Source: https://mac-stat.github.io/data/election_2020_county.csv"
+#| fig-alt: "Faceted density plot of Republican percentage of the 2020 presidential election vote, organized by historical political leanings of the state. Historically red states peak at about 80%, historically blue states peak at about 60%, and historically swinging states peak at about 70%. Source: https://mac-stat.github.io/data/election_2020_county.csv"
+
+ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
+  geom_density(alpha = 0.4) +
+  scale_fill_manual(values = c("blue", "purple", "red")) + labs(x = "Republican Percentage of 2020 Vote", y = "Density", fill = "Historical Political Leaning of State") + theme_minimal()
+```
