@@ -13,8 +13,19 @@ I rounded these to the nearest whole number, so that they're near to but not exa
 Let's load [the data](../data/our_fave_places.csv) and map it!
 
 ```{r}
+
 library(tidyverse)
 library(readr)
+library(sf)
+library(maps)
+library(RColorBrewer)
+library(gplots)
+library(socviz)
+library(leaflet)
+library(devtools)
+library(rnaturalearth)
+library(rnaturalearthhires)
+
 
 #| echo: false
 

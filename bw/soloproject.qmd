@@ -1,5 +1,5 @@
 ---
-title: "soloproject"
+title: "Solo Project"
 format: html
 ---
 
@@ -22,17 +22,28 @@ unemployment |>
 ```
 ```{r}
 library(sf)
+library(maps)
+library(RColorBrewer)
+library(gplots)
+library(socviz)
+library(devtools)
+library(dplyr)
+library(ggthemes)
+devtools::install_github("ropensci/rnaturalearthhires")
+library(rnaturalearth)
+library(ggplot2)
 
 # Get the latitude and longitude coordinates of county boundaries
 counties_map <- map_data("county") |>
-  rename(County = subregion) |>
+  rename(County = subregion)|>
   filter(region == "illinois")
 head(counties_map)
 
+
 ```
 
-This code is not in a code chunk because it would not render and I could not find my mistake:
 
+The code for my map is not in a code chunk because something was preventing it from rendering, but I couldn't find what it was.
 
 
 #|echo: false
@@ -46,6 +57,7 @@ ggplot(unemployment_small, aes(map_id = County, fill = Rate)) +
   theme_map() +
   facet_wrap(~Year)
   
+
 
 
 

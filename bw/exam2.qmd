@@ -1,0 +1,82 @@
+---
+title: "Food Consunmtion 2"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(tidytuesdayR)
+library(rnaturalearth)
+library(sf)
+```
+
+```{r}
+tuesdata <- tt_load('2020-02-18')
+fc <- tuesdata$food_consumption
+```
+
+```{r}
+str(fc)
+```
+
+```{r}
+head(fc, 22)
+```
+
+```{r}
+fcc <-
+fc |>
+  mutate(food_category = recode(food_category,
+   "Lamb & Goat" = "Lamb",
+    "Milk - inc. cheese"  = "Dairy",
+   "Wheat and Wheat Products" = "Wheat",
+    "Nuts inc. Peanut Butter" = "Nuts"))
+
+```
+
+Research Question #1
+```{r}
+fcc|>
+  group_by(country)|>
+  summarize(consumption=sum(consumption))|>
+  arrange(desc(consumption))|>
+  head(5) |>
+  ggplot(aes(x = country, y = consumption)) +
+  geom_col(fill = "red", color = "white")
+```
+Research Question #2
+```{r}
+fcc|>
+  group_by(food_category)|>
+  slice_max(n = 5, consumption)|>
+  select(food_category, country, consumption)
+```
+
+Research Question #3
+```{r}
+ne_countries(returnclass = "sf") |>
+  select(name, geometry) |>
+  mutate(name = ifelse(name == "United States of America", "USA", name))|>
+  mutate(name = ifelse(name == "Bosnia and Herz", "Bosnia and Herzegovina", name))|>
+  mutate(name = ifelse(name == "Czechia", "Czech Republic", name))|>
+  mutate(name = ifelse(name == "Taiwan", "Taiwan. ROC", name))|>
+  left_join(
+    fcc|>
+      select(-co2_emmission)|>
+      group_by(food_category)|>
+      mutate(consumption = (consumption - mean(consumption))/sd(consumption)),
+    join_by(name == country))|>
+  pivot_wider(names_from = food_category, values_from = consumption)|>
+  select(-"NA")|>
+  pivot_longer(cols = c(-name, -geometry),
+               names_to = "food_category",
+               values_to = "consumption") |>
+  ggplot() +
+  geom_sf(aes(fill = consumption)) +
+  facet_wrap(~food_category) +
+  theme(legend.position = "bottom")
+  
+```
+
+
+
