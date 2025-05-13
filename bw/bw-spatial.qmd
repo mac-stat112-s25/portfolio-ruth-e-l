@@ -5,6 +5,9 @@ title: "Spatial Viz"
 Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
 
 ```{r}
+library(tidyverse)
+library(ggplot2)
+library(ggthemes)
 #load map
 library(socviz)
 data(county_map) 

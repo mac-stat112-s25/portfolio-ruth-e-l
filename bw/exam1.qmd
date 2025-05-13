@@ -1,0 +1,70 @@
+---
+title: "exam1"
+format: html
+---
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+```
+
+```{r}
+tuesdata <- tt_load('2020-02-18')
+fc <- tuesdata$food_consumption
+```
+
+```{r}
+head(fc)
+tail(fc)
+dim(fc)
+str(fc)
+```
+
+```{r}
+#| fig-height: 11
+#| fig-width: 66
+ggplot(fc, aes(x = country)) +
+  geom_bar()
+```
+
+```{r}
+#| fig-height: 11
+#| fig-width: 22
+ggplot(fc, aes(x = food_category)) +
+  geom_bar()
+```
+
+```{r}
+ggplot(fc, aes(x = consumption)) +
+  geom_density()
+```
+
+```{r}
+#| fig-height: 16
+#| fig-width: 16
+ggplot(fc, aes(x = food_category, y = consumption)) +
+  geom_boxplot()
+```
+
+```{r}
+#| fig-height: 11
+#| fig-width: 66
+ggplot(fc, aes(x = country, y = consumption)) +
+  geom_col()
+```
+
+```{r}
+#| fig-height: 33
+#| fig-width: 11
+ggplot(fc, aes(x = consumption, y = country, fill = food_category)) +
+  geom_col()
+```
+
+```{r}
+ggplot(fc, aes(fil = consumption))
+```
+
+```{r}
+
+```
+

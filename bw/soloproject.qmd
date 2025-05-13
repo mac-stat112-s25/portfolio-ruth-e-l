@@ -1,0 +1,51 @@
+---
+title: "soloproject"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+library(rnaturalearth)
+unemployment <- read_csv("C:/Users/ruthe/Downloads/archive/output.csv")
+```
+```{r}
+
+unemployment_small <-
+unemployment |>
+  mutate(County = str_remove_all(County, "County"), County = str_to_lower(County)) |>
+  filter(State == "Illinois", Year %in% c("2007", "2010")) |>
+  group_by(Year, County) |>
+  summarize(Rate = mean(Rate)) 
+  
+  
+```
+```{r}
+library(sf)
+
+# Get the latitude and longitude coordinates of county boundaries
+counties_map <- map_data("county") |>
+  rename(County = subregion) |>
+  filter(region == "illinois")
+head(counties_map)
+
+```
+
+This code is not in a code chunk because it would not render and I could not find my mistake:
+
+
+
+#|echo: false
+#|fig-cap: "Faceted chloropleth map of unemployment rates in Illinois counties in 2007 and 2010 (before and after the housing market crash) Source: https://www.kaggle.com/datasets/jayrav13/unemployment-by-county-us"
+#|fig-alt: "Faceted chloropleth map of unemployment rates in Illinois counties in 2007 and 2010. Unemployment rates are generally higher in 2010 than in 2007, likely because of the housing market crash of 2008. Source: https://www.kaggle.com/datasets/jayrav13/unemployment-by-county-us"
+
+ggplot(unemployment_small, aes(map_id = County, fill = Rate)) +
+  geom_map(map = counties_map) +
+  expand_limits(x = counties_map$long, y = counties_map$lat) +
+  scale_fill_gradientn(name = "Unemployment Rate", colors = c("white", "darkred")) +
+  theme_map() +
+  facet_wrap(~Year)
+  
+
+
+

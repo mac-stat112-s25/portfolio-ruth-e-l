@@ -4,6 +4,8 @@ title: "Univariate Viz"
 
 
 ```{r}
+library(tidyverse)
+library(readr)
 # Import data
 hikes <- read_csv("C:/Users/ruthe/Downloads/high_peaks.csv")
 

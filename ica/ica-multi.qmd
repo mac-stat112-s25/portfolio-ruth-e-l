@@ -7,13 +7,13 @@ Use this file for practice with the **mulivariate viz** in-class activity.  Refe
 
 ## Exercises (required)
 
-{{< include activity-instructions.qmd >}}
-
 ### The story {-}
 
 Though far from a perfect assessment of academic preparedness, SAT scores have historically been used as one measurement of a state's education system. The `education` dataset contains various education variables for each state:
 
 ```{r}
+library(tidyverse)
+library(readr)
 # Import and check out data
 education <- read.csv("https://mac-stat.github.io/data/sat.csv")
 head(education)
@@ -305,17 +305,17 @@ ggplot(weather, aes(x = temp3pm, fill = location)) +
 ```{r}
 # How often does it raintoday?
 # Fill your geometric layer with the color blue.
-ggplot(woll, aes(x = raintoday)) + 
+ggplot(weather, aes(x = raintoday)) + 
   geom_bar(fill = "blue")
 ```
 
 ```{r}
 # If it does raintoday, what does this tell us about raintomorrow?
 # Use your intuition first
-ggplot(woll, aes(x = raintoday)) + 
+ggplot(weather, aes(x = raintoday)) + 
   geom_bar(aes(fill = raintomorrow))
 
-ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
   geom_bar()
 ```
 
@@ -323,20 +323,20 @@ ggplot(woll, aes(x = raintoday, fill = raintomorrow)) +
 # Now compare different approaches
 
 # Default: stacked bars
-ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
   geom_bar()
 ```
 
 ```{r}
 # Side-by-side bars
-ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
   geom_bar(position = "dodge")
 ```
 
 ```{r}
 # Proportional bars
 # position = "fill" refers to filling the frame, nothing to do with the color-related fill
-ggplot(woll, aes(x = raintoday, fill = raintomorrow)) + 
+ggplot(weather, aes(x = raintoday, fill = raintomorrow)) + 
   geom_bar(position = "fill")
 ```
 
@@ -345,7 +345,7 @@ ggplot(woll, aes(x = raintoday, fill = raintomorrow)) +
 ```{r}
 # THINK: What variable goes on the y-axis?
 # For the curve, try adding span = 0.5 to tweak the curvature
-ggplot(woll, aes(y = temp3pm, x = date)) + 
+ggplot(weather, aes(y = temp3pm, x = date)) + 
   geom_point() + 
   geom_smooth(span = 0.5)
 ```
@@ -354,7 +354,7 @@ ggplot(woll, aes(y = temp3pm, x = date)) +
 # Instead of a curve that captures the general TREND,
 # draw a line that illustrates the movement of RAW temperatures from day to day
 # NOTE: We haven't learned this geom yet! Guess.
-ggplot(woll, aes(y = temp3pm, x = date)) + 
+ggplot(weather, aes(y = temp3pm, x = date)) + 
   geom_line()
 ```
 

@@ -8,6 +8,8 @@ A wrangled version of this data, is imported below, after being combined with:
 
 
 ```{r}
+library(tidyverse)
+library(readr)
 # Load data
 elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
 

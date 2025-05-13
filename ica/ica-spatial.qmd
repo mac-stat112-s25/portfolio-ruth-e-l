@@ -13,12 +13,11 @@ I rounded these to the nearest whole number, so that they're near to but not exa
 Let's load [the data](../data/our_fave_places.csv) and map it!
 
 ```{r}
+library(tidyverse)
+library(readr)
+
 #| echo: false
 
-fave_places <- read.csv("../data/our_fave_places.csv")
-
-# Check it out
-head(fave_places)
 ```
 
 
@@ -38,14 +37,12 @@ You can use a "two-finger scroll" to zoom in and out.
 ```{r}
 # Load the leaflet package
 library(leaflet)
-
-# Just a plotting frame
-leaflet(data = fave_places)
+library(leaflet.providers)
 ```
 
 ```{r}
 # Now what do we have?
-leaflet(data = fave_places) |> 
+leaflet(data = "fave_places") |> 
   addTiles()
 ```
 

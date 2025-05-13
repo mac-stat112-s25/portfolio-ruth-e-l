@@ -11,7 +11,7 @@ Let's examine weather in 3 Australian locations.
 ```{r}
 # Load tidyverse package for plotting and wrangling
 library(tidyverse)
-
+library(readr)
 # Import the data
 weather <- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |> 
   mutate(date = as.Date(date))
